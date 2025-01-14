@@ -1,0 +1,626 @@
+/* Spezifische Styles für die Service-Seite */
+.service-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.service-container h1 {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #333;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.service-container h1::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff0000;
+  transform: none;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #ff0000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: left;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-card h3 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.service-link {
+  display: inline-block;
+  color: #ff0000;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 2px solid #ff0000;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.service-link:hover {
+  background: #ff0000;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.contact-info {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.contact-info h2 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+.contact-info h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff0000;
+}
+
+.contact-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.contact-method {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-method:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-method h3 {
+  color: #333;
+  font-size: 1.3em;
+  margin-bottom: 15px;
+}
+
+.contact-method p {
+  color: #666;
+  font-size: 1.1em;
+  margin: 5px 0;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 0.9em;
+  margin-top: 8px;
+}
+
+/* Icons für die Service-Cards */
+.service-card i {
+  font-size: 2.5em;
+  color: #ff0000;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .service-container {
+    padding: 15px;
+  }
+
+  .service-grid {
+    gap: 20px;
+  }
+
+  .contact-methods {
+    gap: 20px;
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 15px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.close-modal {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+  color: #ff0000;
+}
+
+/* FAQ Styles */
+.faq-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-item h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Contact Options Styles */
+.contact-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.contact-option {
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f8f8f8;
+}
+
+.contact-option i {
+  font-size: 2em;
+  color: #ff0000;
+  margin-bottom: 15px;
+}
+
+/* Banking Support Styles */
+.banking-support {
+  margin-top: 20px;
+}
+
+.support-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f8f8;
+  border-radius: 10px;
+}
+
+.support-section h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Accordion Styles */
+.accordion-item {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.accordion-header {
+  background: #f8f8f8;
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header:hover {
+  background: #f0f0f0;
+}
+
+.accordion-header h3 {
+  margin: 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.accordion-header i {
+  transition: transform 0.3s ease;
+  color: #666;
+}
+
+.accordion-item.active .accordion-header i {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background: white;
+}
+
+.accordion-item.active .accordion-content {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 20px;
+}
+
+.accordion-content {
+  padding: 0 20px;
+}
+
+.accordion-item.active .accordion-content {
+  padding: 20px;
+}
+
+.accordion-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.accordion-content ul li {
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+  list-style-type: none;
+  display: flex;
+  align-items: flex-start;
+}
+
+.accordion-content ul li::before {
+  content: "•";
+  color: #ff0000;
+  margin-right: 8px;
+  position: static;
+  left: auto;
+}
+
+/* Styles für die Preisdarstellung im FAQ */
+.account-prices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.price-item {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #eee;
+}
+
+.price-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.price-item h4 {
+  color: #ff0000;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.price-item ul li {
+  margin-bottom: 12px;
+  padding-left: 0;
+  font-size: 0.95em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-item ul li strong {
+  color: #333;
+}
+
+.included {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .account-prices {
+    grid-template-columns: 1fr;
+  }
+
+  .accordion-item.active .accordion-content {
+    max-height: 600px;
+  }
+}
+
+/* Scrollbar Styling */
+.accordion-item.active .accordion-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.accordion-item.active .accordion-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.accordion-item.active .accordion-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.accordion-item.active .accordion-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Neue spezifische Styles für Online-Banking Support */
+.support-accordion .accordion-item.active .accordion-content {
+  height: auto !important;
+  min-height: 100px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.support-accordion .accordion-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.support-accordion .accordion-content ul li {
+  margin-bottom: 10px;
+}
+
+.support-accordion .accordion-content ul li:last-child {
+  margin-bottom: 0;
+}
+
+.support-accordion .accordion-content p:last-child,
+.support-accordion .accordion-content ul:last-child {
+  margin-bottom: 0;
+}
+
+/* FAQ Preise Accordion (für "Was kostet ein Girokonto?") */
+.prices-accordion .accordion-item.active .accordion-content {
+  height: 440px !important;
+  overflow-y: auto !important;
+  padding: 20px;
+}
+
+/* FAQ Standard Accordion (für andere FAQ-Fragen) */
+.standard-accordion .accordion-item.active .accordion-content {
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  padding: 20px;
+}
+
+/* Online-Banking Support Accordion */
+.support-accordion .accordion-item.active .accordion-content {
+  height: auto !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  padding: 20px;
+}
+
+/* Gemeinsame Basis-Styles für Listen */
+.standard-accordion .accordion-content ul,
+.support-accordion .accordion-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.standard-accordion .accordion-content ul li,
+.support-accordion .accordion-content ul li {
+  margin-bottom: 10px;
+}
+
+.standard-accordion .accordion-content ul li:last-child,
+.support-accordion .accordion-content ul li:last-child {
+  margin-bottom: 0;
+}
+
+.standard-accordion .accordion-content p:last-child,
+.standard-accordion .accordion-content ul:last-child,
+.support-accordion .accordion-content p:last-child,
+.support-accordion .accordion-content ul:last-child {
+  margin-bottom: 0;
+}
+
+/* Basis Accordion Styles */
+.accordion-item {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.accordion-header {
+  background: #f8f8f8;
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background: white;
+}
+
+/* Die Hauptregel für aktive Accordion-Inhalte */
+.accordion-item.active .accordion-content {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 20px;
+}
+
+/* Spezifischere Regel für den Preise-Accordion */
+.prices-accordion.accordion-item.active .accordion-content,
+div.prices-accordion .accordion-item.active .accordion-content {
+  height: 440px !important;
+  max-height: 440px !important;
+  overflow-y: auto !important;
+  padding: 20px;
+}
+
+/* Support Accordion */
+.support-accordion .accordion-item.active .accordion-content {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 20px;
+}
+
+/* Listen Styling */
+.accordion-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.accordion-content ul li {
+  margin-bottom: 10px;
+}
+
+.accordion-content ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Entferne zusätzliche Abstände */
+.accordion-content p:last-child,
+.accordion-content ul:last-child {
+  margin-bottom: 0;
+}
+
+/* Basis Accordion Container */
+.accordion-container {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px; /* Platz für Scrollbar */
+}
+
+/* Scrollbar Styling */
+.accordion-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.accordion-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.accordion-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.accordion-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Bestehende Styles beibehalten */
+.accordion-item.active .accordion-content {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 20px;
+}
+
+.prices-accordion.accordion-item.active .accordion-content,
+div.prices-accordion .accordion-item.active .accordion-content {
+  height: 440px !important;
+  max-height: 440px !important;
+  overflow-y: auto !important;
+  padding: 20px;
+}

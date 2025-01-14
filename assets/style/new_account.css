@@ -1,0 +1,162 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.account-selection {
+  text-align: center;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.account-types {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.75rem;
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+.account-type-card {
+  position: relative;
+  min-width: 250px;
+  height: 100%;
+}
+
+.account-type-card input[type="radio"] {
+  display: none;
+}
+
+.account-type-card label {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.account-type-card input[type="radio"]:checked + label {
+  border-color: #ff0000;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.price {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.amount {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #ff0000;
+}
+
+.period {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.features li {
+  margin: 0.8rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.4;
+}
+
+.features i {
+  color: #00c853;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  clear: both;
+  padding-top: 1rem;
+}
+
+.btn-primary {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.btn-primary:hover {
+  background-color: #e60000;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .account-types {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .account-types {
+    grid-template-columns: 1fr;
+  }
+}
+
+.welcome-bonus {
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 2px dashed #ff0000;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #ffeeee;
+}
+
+.welcome-bonus i {
+  color: #ff0000;
+  font-size: 1.5rem;
+}
+
+.bonus-amount {
+  color: #ff0000;
+  font-size: 1.5em;
+  font-weight: bold;
+  display: block;
+  margin: 5px 0;
+}
+
+.bonus-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.card-content {
+  padding: 20px;
+}

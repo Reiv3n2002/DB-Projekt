@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spaßkasse - Ihre digitale Bank</title>
-    <link rel="stylesheet" href="assets/style/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Startseite - Spaßkasse</title>
+    <link rel="stylesheet" href="assets/style/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <?php include 'assets/navbar.php'; ?>
@@ -85,11 +85,32 @@
         </div>
     </div>
 
+    <?php if(isset($_GET['logout']) && $_GET['logout'] == 'success'): ?>
+        <div id="logoutMessage" class="alert-dialog">
+            <div class="alert-content">
+                <i class="fas fa-check-circle"></i>
+                <span>Sie wurden erfolgreich abgemeldet.</span>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <script>
     function toggleWidget() {
         const widget = document.getElementById('contactWidget');
         widget.classList.toggle('collapsed');
     }
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutMessage = document.getElementById('logoutMessage');
+        if (logoutMessage) {
+            // Entfernt das Element nach 3 Sekunden aus dem DOM
+            setTimeout(() => {
+                logoutMessage.remove();
+            }, 3000);
+        }
+    });
     </script>
 </body>
 </html>
