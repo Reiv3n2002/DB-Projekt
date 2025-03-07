@@ -1,0 +1,141 @@
+.bewerbung-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bewerbung-container h1 {
+  color: #004d99;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.bewerbung-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.bewerbung-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.bewerbung-form input[type='text'],
+.bewerbung-form input[type='email'],
+.bewerbung-form input[type='tel'] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.bewerbung-form input[type='text']:focus,
+.bewerbung-form input[type='email']:focus,
+.bewerbung-form input[type='tel']:focus {
+  border-color: #004d99;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 77, 153, 0.1);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 150px;
+  transition: border-color 0.3s ease;
+}
+
+.form-textarea:focus {
+  border-color: #004d99;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 77, 153, 0.1);
+}
+
+.form-textarea::placeholder {
+  color: #999;
+}
+
+.submit-button {
+  background-color: #004d99;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #003366;
+}
+
+.success-message {
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+  color: #3c763d;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.success-message p {
+  margin-top: 1.5rem;
+}
+
+.back-button {
+  display: inline-block;
+  background-color: #004d99;
+  color: white !important;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid #004d99;
+}
+
+.back-button:hover {
+  background-color: #fff;
+  color: #004d99 !important;
+  text-decoration: none !important;
+}
+
+.back-button i {
+  margin-right: 0.5rem;
+}
+
+.error-message {
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  color: #a94442;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bewerbung-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .bewerbung-container h1 {
+    font-size: 1.5rem;
+  }
+}

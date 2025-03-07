@@ -5,34 +5,37 @@ require_once '../assets/database.php';
 // Prüfen ob User eingeloggt ist
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../auth.php');
-    exit;
+    exit();
 }
 
 // Prüfen ob User Admin-Rechte hat
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
+
     // Debug-Ausgabe
-    echo "Admin-Status: ";
+    echo 'Admin-Status: ';
     var_dump($_SESSION['is_admin']);
-    
+
     // Wenn kein Admin, zeige Fehlermeldung und Link zurück
     ?>
-    <!DOCTYPE html>
-    <html lang="de">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Zugriff verweigert - Admin</title>
-        <link rel="stylesheet" href="../assets/style/main.css">
-        <link rel="stylesheet" href="../assets/style/navbar.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    </head>
-    <body>
-        <?php include '../assets/navbar.php'; ?>
-        <div class="container">
-            <div class="error-message" style="text-align: center; margin-top: 50px;">
-                <h1 style="color: #FF0000;">Zugriff verweigert</h1>
-                <p>Sie haben keine Berechtigung, auf diese Seite zuzugreifen.</p>
-                <a href="../dashboard.php" style="
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zugriff verweigert - Admin</title>
+    <link rel="stylesheet" href="../assets/style/main.css">
+    <link rel="stylesheet" href="../assets/style/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <?php include '../assets/navbar.php'; ?>
+    <div class="container">
+        <div class="error-message" style="text-align: center; margin-top: 50px;">
+            <h1 style="color: #FF0000;">Zugriff verweigert</h1>
+            <p>Sie haben keine Berechtigung, auf diese Seite zuzugreifen.</p>
+            <a href="../dashboard.php" style="
                     display: inline-block;
                     margin-top: 20px;
                     padding: 10px 20px;
@@ -41,12 +44,12 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                     text-decoration: none;
                     border-radius: 4px;
                 ">Zurück zum Dashboard</a>
-            </div>
         </div>
-    </body>
-    </html>
-    <?php
-    exit;
+    </div>
+</body>
+
+</html>
+<?php exit();
 }
 
 // Datenbankverbindung herstellen
@@ -75,19 +78,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $price['overdraft_interest'],
             $price['credit_interest'],
             $price['atm_fee'],
-            $priceId
+            $priceId,
         ]);
     }
 
-    $updateMessage = "Preise wurden erfolgreich aktualisiert!";
+    $updateMessage = 'Preise wurden erfolgreich aktualisiert!';
 }
 
 // Aktuelle Preise laden
-$prices = $pdo->query("SELECT * FROM account_prices ORDER BY price_id")->fetchAll();
+$prices = $pdo
+    ->query('SELECT * FROM account_prices ORDER BY price_id')
+    ->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,15 +103,16 @@ $prices = $pdo->query("SELECT * FROM account_prices ORDER BY price_id")->fetchAl
     <link rel="stylesheet" href="../assets/style/admin/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
     <?php include '../assets/navbar.php'; ?>
     <div class="admin-container">
         <h1>Kontopreise verwalten</h1>
-        
+
         <?php if (isset($updateMessage)): ?>
-            <div class="update-message">
-                <i class="fas fa-check-circle"></i> <?php echo $updateMessage; ?>
-            </div>
+        <div class="update-message">
+            <i class="fas fa-check-circle"></i> <?php echo $updateMessage; ?>
+        </div>
         <?php endif; ?>
 
         <form method="POST">
@@ -123,58 +130,78 @@ $prices = $pdo->query("SELECT * FROM account_prices ORDER BY price_id")->fetchAl
                 </thead>
                 <tbody>
                     <?php foreach ($prices as $price): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($price['account_type']); ?></td>
-                            <td>
-                                <div class="price-input-container">
-                                    <input type="number" step="0.01" class="price-input" 
-                                        name="prices[<?php echo $price['price_id']; ?>][monthly_fee]" 
-                                        value="<?php echo $price['monthly_fee']; ?>">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="price-input-container">
-                                    <input type="number" step="0.01" class="price-input" 
-                                        name="prices[<?php echo $price['price_id']; ?>][card_fee]" 
-                                        value="<?php echo $price['card_fee']; ?>">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="price-input-container">
-                                    <input type="number" step="0.01" class="price-input" 
-                                        name="prices[<?php echo $price['price_id']; ?>][foreign_payment_fee]" 
-                                        value="<?php echo $price['foreign_payment_fee']; ?>">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="price-input-container">
-                                    <input type="number" step="0.01" class="price-input" 
-                                        name="prices[<?php echo $price['price_id']; ?>][overdraft_interest]" 
-                                        value="<?php echo $price['overdraft_interest']; ?>">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="price-input-container">
-                                    <input type="number" step="0.01" class="price-input" 
-                                        name="prices[<?php echo $price['price_id']; ?>][credit_interest]" 
-                                        value="<?php echo $price['credit_interest']; ?>">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="price-input-container">
-                                    <input type="number" step="0.01" class="price-input" 
-                                        name="prices[<?php echo $price['price_id']; ?>][atm_fee]" 
-                                        value="<?php echo $price['atm_fee']; ?>">
-                                </div>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><?php echo htmlspecialchars(
+                            $price['account_type']
+                        ); ?></td>
+                        <td>
+                            <div class="price-input-container">
+                                <input type="number" step="0.01" class="price-input" name="prices[<?php echo $price[
+                                    'price_id'
+                                ]; ?>][monthly_fee]" value="<?php echo $price[
+    'monthly_fee'
+]; ?>">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price-input-container">
+                                <input type="number" step="0.01" class="price-input" name="prices[<?php echo $price[
+                                    'price_id'
+                                ]; ?>][card_fee]" value="<?php echo $price[
+    'card_fee'
+]; ?>">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price-input-container">
+                                <input type="number" step="0.01" class="price-input" name="prices[<?php echo $price[
+                                    'price_id'
+                                ]; ?>][foreign_payment_fee]" value="<?php echo $price[
+    'foreign_payment_fee'
+]; ?>">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price-input-container">
+                                <input type="number" step="0.01" class="price-input" name="prices[<?php echo $price[
+                                    'price_id'
+                                ]; ?>][overdraft_interest]" value="<?php echo $price[
+    'overdraft_interest'
+]; ?>">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price-input-container">
+                                <input type="number" step="0.01" class="price-input" name="prices[<?php echo $price[
+                                    'price_id'
+                                ]; ?>][credit_interest]" value="<?php echo $price[
+    'credit_interest'
+]; ?>">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price-input-container">
+                                <input type="number" step="0.01" class="price-input" name="prices[<?php echo $price[
+                                    'price_id'
+                                ]; ?>][atm_fee]" value="<?php echo $price[
+    'atm_fee'
+]; ?>">
+                            </div>
+                        </td>
+                    </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <button type="submit" class="save-button">
-                <i class="fas fa-save"></i> Änderungen speichern
-            </button>
+            <div class="button-container">
+                <a href="../dashboard.php" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Zurück zum Dashboard
+                </a>
+                <button type="submit" class="save-button">
+                    <i class="fas fa-save"></i> Änderungen speichern
+                </button>
+            </div>
         </form>
     </div>
 </body>
-</html> 
+
+</html>

@@ -1,8 +1,8 @@
 <?php
-session_start();
+// Stelle sicher, dass keine Ausgaben vor diesem Punkt erfolgen
 require_once 'assets/database.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     // Datenbankverbindung herstellen
     $db = Database::getInstance();
     $pdo = $db->getConnection();

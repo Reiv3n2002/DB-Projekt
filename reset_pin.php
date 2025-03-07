@@ -2,7 +2,7 @@
 require_once 'assets/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pdo = connectDBPDO();
+    $pdo = Database::getInstance()->getConnection();
     
     $username = $_POST['username'];
     $recoveryCode = $_POST['recovery_code'];

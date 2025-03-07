@@ -17,7 +17,7 @@
 }
 
 .karriere-container h1::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -8px;
   left: 0;
@@ -44,7 +44,7 @@
 }
 
 .job-card::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -116,7 +116,7 @@
 }
 
 .job-requirements h3::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 50%;
@@ -275,4 +275,82 @@
 .job-details,
 .requirements-content {
   transition: all 0.3s ease-in-out;
+}
+
+.file-input-group {
+  margin-bottom: 2rem;
+}
+
+.file-inputs {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.file-input-wrapper {
+  flex: 1;
+  min-width: 200px;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.file-input-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f8f8f8;
+}
+
+.file-input-text:hover {
+  border-color: #004d99;
+  background-color: #f0f0f0;
+}
+
+.file-input-text i {
+  color: #004d99;
+  font-size: 1.2rem;
+}
+
+.file-input-text span {
+  color: #666;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .file-input-wrapper {
+    flex: 100%;
+  }
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 150px;
+  transition: border-color 0.3s ease;
+}
+
+.form-textarea:focus {
+  border-color: #004d99;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 77, 153, 0.1);
+}
+
+.form-textarea::placeholder {
+  color: #999;
 }

@@ -27,7 +27,7 @@
   height: 100%;
 }
 
-.account-type-card input[type="radio"] {
+.account-type-card input[type='radio'] {
   display: none;
 }
 
@@ -42,7 +42,7 @@
   transition: all 0.3s ease;
 }
 
-.account-type-card input[type="radio"]:checked + label {
+.account-type-card input[type='radio']:checked + label {
   border-color: #ff0000;
   box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
 }
@@ -159,4 +159,23 @@
 
 .card-content {
   padding: 20px;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.alert i {
+  font-size: 1.2em;
 }

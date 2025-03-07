@@ -1,5 +1,3 @@
-use onlinebanking_db;
-
 -- Benutzer Tabelle
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -12,20 +10,42 @@ CREATE TABLE users (
     address TEXT NULL,
     phone_number VARCHAR(20),
     is_admin BOOLEAN DEFAULT FALSE,
+    is_locked TINYINT(1) DEFAULT 0,
+    locked_reason VARCHAR(255) DEFAULT NULL,
+    locked_at DATETIME DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP NULL DEFAULT NULL
 ); 
+
+-- Füge den Admin-User hinzu
+
+INSERT INTO users (username, password_hash, email, first_name, last_name) 
+
+VALUES (
+
+    'Admin', 
+
+    '$2y$10$8FOhV6KqMRlZXqH7D3SWVeqPRhkGgKxuaBPZQjPRKQkK9QVpGpxTC', -- password_hash für 'admin'
+
+    'admin@example.com',
+
+    'Admin',
+
+    'User'
+
+);
 
 -- Konten Tabelle
 CREATE TABLE accounts (
     account_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     account_number VARCHAR(20) UNIQUE NOT NULL,
-    account_type ENUM('Girokonto', 'Sparkonto', 'Festgeldkonto') NOT NULL,
+    account_type VARCHAR(50) NOT NULL,
     balance DECIMAL(15,2) DEFAULT 0.00,
     currency VARCHAR(3) DEFAULT 'EUR',
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    interest_rate DECIMAL(4,2) DEFAULT 0.00,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -51,6 +71,78 @@ CREATE TABLE security_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+-- Wiederherstellungscodes
+CREATE TABLE recovery_codes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    recovery_code VARCHAR(6) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_used BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Optional: Erstelle einen Recovery-Code für den Admin
+
+INSERT INTO recovery_codes (user_id, recovery_code)
+
+VALUES (
+
+    LAST_INSERT_ID(),
+
+    '123456'
+
+);
+
+CREATE TABLE account_prices (
+    price_id INT PRIMARY KEY AUTO_INCREMENT,
+    account_type VARCHAR(50) NOT NULL,
+    monthly_fee DECIMAL(10,2) DEFAULT 0.00,
+    card_fee DECIMAL(10,2) DEFAULT 0.00,
+    foreign_payment_fee DECIMAL(10,2) DEFAULT 0.00,
+    overdraft_interest DECIMAL(5,2) DEFAULT 0.00,
+    credit_interest DECIMAL(5,2) DEFAULT CASE 
+        WHEN account_type = 'Basis-Konto' THEN 0.01
+        WHEN account_type = 'Komfort-Konto' THEN 0.05
+        WHEN account_type = 'Premium-Konto' THEN 0.10
+        WHEN account_type = 'Student & Azubi' THEN 0.01
+        WHEN account_type = 'Sparkonto' THEN 2.50
+        WHEN account_type = 'Festgeldkonto' THEN 3.00
+        ELSE 0.00
+    END,
+    atm_fee DECIMAL(10,2) DEFAULT 0.00,
+    welcome_bonus DECIMAL(10,2) DEFAULT 0.00,
+    is_active BOOLEAN DEFAULT TRUE,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT valid_account_type CHECK (
+        account_type IN (
+            'Basis-Konto', 
+            'Komfort-Konto', 
+            'Premium-Konto', 
+            'Student & Azubi',
+            'Sparkonto',
+            'Festgeldkonto'
+        )
+    )
+);
+
+-- Füge die Standardwerte ein
+INSERT INTO account_prices (
+    account_type, 
+    monthly_fee, 
+    card_fee, 
+    foreign_payment_fee, 
+    overdraft_interest, 
+    credit_interest,
+    atm_fee,
+    welcome_bonus
+) VALUES 
+('Basis-Konto', 3.90, 0.00, 1.50, 11.90, 0.01, 2.50, 250.00),
+('Komfort-Konto', 7.90, 0.00, 0.00, 10.90, 0.05, 0.00, 500.00),
+('Premium-Konto', 12.90, 0.00, 0.00, 9.90, 0.10, 0.00, 1000.00),
+('Student & Azubi', 0.00, 0.00, 0.00, 8.90, 0.01, 0.00, 100.00),
+('Sparkonto', 0.00, 0.00, 0.00, 0.00, 2.50, 0.00, 0.00),
+('Festgeldkonto', 0.00, 0.00, 0.00, 0.00, 3.00, 0.00, 0.00);
 
 -- Karriere/Jobs Tabelle
 CREATE TABLE jobs (
@@ -134,62 +226,33 @@ CREATE TABLE job_applications (
     FOREIGN KEY (job_id) REFERENCES jobs(job_id)
 );
 
--- Wiederherstellungscodes
-CREATE TABLE recovery_codes (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    recovery_code VARCHAR(6) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_used BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
+ALTER TABLE accounts MODIFY COLUMN account_type VARCHAR(50) NOT NULL;
 
-CREATE TABLE account_prices (
-    price_id INT PRIMARY KEY AUTO_INCREMENT,
-    account_type VARCHAR(50) NOT NULL,
-    monthly_fee DECIMAL(10,2) DEFAULT 0.00,
-    card_fee DECIMAL(10,2) DEFAULT 0.00,
-    foreign_payment_fee DECIMAL(10,2) DEFAULT 0.00,
-    overdraft_interest DECIMAL(5,2) DEFAULT 0.00,
-    credit_interest DECIMAL(5,2) DEFAULT CASE 
-        WHEN account_type = 'Basis-Konto' THEN 0.01
-        WHEN account_type = 'Komfort-Konto' THEN 0.05
-        WHEN account_type = 'Premium-Konto' THEN 0.10
-        WHEN account_type = 'Student & Azubi' THEN 0.01
-        WHEN account_type = 'Sparkonto' THEN 2.50
-        WHEN account_type = 'Festgeldkonto' THEN 3.00
-        ELSE 0.00
-    END,
-    atm_fee DECIMAL(10,2) DEFAULT 0.00,
-    welcome_bonus DECIMAL(10,2) DEFAULT 0.00,
-    is_active BOOLEAN DEFAULT TRUE,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT valid_account_type CHECK (
-        account_type IN (
-            'Basis-Konto', 
-            'Komfort-Konto', 
-            'Premium-Konto', 
-            'Student & Azubi',
-            'Sparkonto',
-            'Festgeldkonto'
-        )
-    )
-);
+-- Neue Prozedur zum Sperren eines Benutzers
+DELIMITER //
+CREATE PROCEDURE lock_user(
+    IN p_user_id INT,
+    IN p_locked_reason TEXT
+)
+BEGIN
+    UPDATE users 
+    SET is_locked = TRUE,
+        locked_reason = p_locked_reason,
+        locked_at = CURRENT_TIMESTAMP
+    WHERE user_id = p_user_id;
+END //
+DELIMITER ;
 
--- Füge die Standardwerte ein
-INSERT INTO account_prices (
-    account_type, 
-    monthly_fee, 
-    card_fee, 
-    foreign_payment_fee, 
-    overdraft_interest, 
-    credit_interest,
-    atm_fee,
-    welcome_bonus
-) VALUES 
-('Basis-Konto', 3.90, 0.00, 1.50, 11.90, 0.01, 2.50, 250.00),
-('Komfort-Konto', 7.90, 0.00, 0.00, 10.90, 0.05, 0.00, 500.00),
-('Premium-Konto', 12.90, 0.00, 0.00, 9.90, 0.10, 0.00, 1000.00),
-('Student & Azubi', 0.00, 0.00, 0.00, 8.90, 0.01, 0.00, 100.00),
-('Sparkonto', 0.00, 0.00, 0.00, 0.00, 2.50, 0.00, 0.00),
-('Festgeldkonto', 0.00, 0.00, 0.00, 0.00, 3.00, 0.00, 0.00);
+-- Neue Prozedur zum Entsperren eines Benutzers
+DELIMITER //
+CREATE PROCEDURE unlock_user(
+    IN p_user_id INT
+)
+BEGIN
+    UPDATE users 
+    SET is_locked = FALSE,
+        locked_reason = NULL,
+        locked_at = NULL
+    WHERE user_id = p_user_id;
+END //
+DELIMITER ;
